@@ -41,7 +41,7 @@ class Fruit: SKNode {
         super.init()
         var emoji = ""
         
-        if randomCGFfloat(0, 1) < 0.6 {
+        if randomCGFfloat(0, 1) < 0.7 {
             let n = Int(arc4random_uniform(UInt32(listOfFruits.count)))
             name = listOfFruits[n].name
             emoji = listOfFruits[n].emoji

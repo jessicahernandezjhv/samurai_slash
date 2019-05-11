@@ -131,6 +131,8 @@ class GameScene: SKScene {
         
         gamePhase = .gameover
         
+        fruitThrowTimer.invalidate()
+        
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: {_ in self.gamePhase = .ready})
     }
 }
