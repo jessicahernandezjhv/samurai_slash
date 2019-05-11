@@ -70,16 +70,21 @@ class GameScene: SKScene {
                         score += element.score
                         node.removeFromParent()
                         
+                        if score > best {
+                            best = score
+                            bestLabel.text = "Best: \(best)"
+                        }
+                        
                         if score <= 0 {
-                            gameOver()
                             score = 0
+                            gameOver()
                         }
                         
                         scoreLabel.text = "\(score)"
                     }
+                }
             }
         }
-    }
     }
     
     
@@ -124,6 +129,7 @@ class GameScene: SKScene {
     
     
     func gameOver() {
+        scoreLabel.text = "\(score)"
         promptLabel.isHidden = false
         promptLabel.text = "Game Over"
         promptLabel.setScale(0)
