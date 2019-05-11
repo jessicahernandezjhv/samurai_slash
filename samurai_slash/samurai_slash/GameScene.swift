@@ -60,21 +60,26 @@ class GameScene: SKScene {
     
     
     func createFruits() {
-        let fruit = Fruit()
-        fruit.position.x = randomCGFfloat(0, size.width)
-        fruit.position.y = -100
-        addChild(fruit)
+        let numberOfFruits = 1 + Int(arc4random_uniform(UInt32(4)))
         
-        if fruit.position.x < size.width/2 {
-            fruit.physicsBody?.velocity.dx = randomCGFfloat(0, 200)
+        for _ in 0..<numberOfFruits {
+            
+            let fruit = Fruit()
+            fruit.position.x = randomCGFfloat(0, size.width)
+            fruit.position.y = -100
+            addChild(fruit)
+            
+            if fruit.position.x < size.width/2 {
+                fruit.physicsBody?.velocity.dx = randomCGFfloat(0, 200)
+            }
+            
+            if fruit.position.x > size.width/2 {
+                fruit.physicsBody?.velocity.dx = randomCGFfloat(0, -200)
+            }
+            
+            fruit.physicsBody?.velocity.dy = randomCGFfloat(500, 800)
+            fruit.physicsBody?.angularVelocity = randomCGFfloat(-5, 5)
         }
-        
-        if fruit.position.x > size.width/2 {
-            fruit.physicsBody?.velocity.dx = randomCGFfloat(0, -200)
-        }
-        
-        fruit.physicsBody?.velocity.dy = randomCGFfloat(500, 800)
-        fruit.physicsBody?.angularVelocity = randomCGFfloat(-5, 5)
     }
     
     
