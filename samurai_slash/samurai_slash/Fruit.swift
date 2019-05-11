@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class ScreenElements {
+struct ScreenElements {
     var emoji =  String()
     var name =  String()
     var score =  Int()
@@ -18,41 +18,36 @@ class ScreenElements {
         self.name = name
         self.score = score
     }
-    
 }
 
 class Fruit: SKNode {
     
-    let listOfElements = [
-        ScreenElements("🍏","manzana", 6),
-        ScreenElements("🍉","sandia", 5),
+    let listOfFruits = [
+        ScreenElements("🍏","manzana", 10),
+        ScreenElements("🍉","sandia", 6),
         ScreenElements("🍌","platano", 5),
         ScreenElements("🍊","naranja", 4),
-        ScreenElements("🍓","fresa", 4),
-        ]
+        ScreenElements("🍇","uva", 3),
+        ScreenElements("🍍","piña", 2),
+        ScreenElements("🍒","cereza", 1),
+        ScreenElements("🍐","pera", 1)]
     
     let listOfBombs = [
-        ScreenElements("💣","bomb", -10),
-        ScreenElements("🧨","tnt", -20)
-    ]
+        ScreenElements("💣","bomb", -15),
+        ScreenElements("🧨","tnt", -25)]
     
-    //let fruitEmojis = ["🍏","🍉","🍌","🍊","🍓", "🍇", "🍍", "🍒", "🍐"]
-    //let nameFruit = ["manzana","sandia","platano","naranja","fresa", "uva", "piña", "cereza", "pera"]
-    //let bombEmoji = ["💣", "🧨"]
-    //let bombName = ["bomb","tnt"]
     
     override init(){
         super.init()
-        
         var emoji = ""
         
-        if randomCGFfloat(0, 1) < 0.9 {
-            let n = Int(arc4random_uniform(UInt32(listOfElements.count)))
-            name = listOfElements[n].name
-            emoji = listOfElements[n].emoji
+        if randomCGFfloat(0, 1) < 0.6 {
+            let n = Int(arc4random_uniform(UInt32(listOfFruits.count)))
+            name = listOfFruits[n].name
+            emoji = listOfFruits[n].emoji
             
         } else {
-            
+    
             let n = Int(arc4random_uniform(UInt32(listOfBombs.count)))
             name = listOfBombs[n].name
             emoji = listOfBombs[n].emoji

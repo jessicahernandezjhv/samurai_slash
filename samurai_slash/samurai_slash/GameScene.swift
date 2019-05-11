@@ -11,6 +11,7 @@ import SpriteKit
 enum GamePhase {
     case ready
     case playing
+    case gameover
 }
 
 class GameScene: SKScene {
@@ -49,7 +50,36 @@ class GameScene: SKScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
+            
+            let listOfElements = [
+                ScreenElements("🍏","manzana", 10),
+                ScreenElements("🍉","sandia", 6),
+                ScreenElements("🍌","platano", 5),
+                ScreenElements("🍊","naranja", 4),
+                ScreenElements("🍇","uva", 3),
+                ScreenElements("🍍","piña", 2),
+                ScreenElements("🍒","cereza", 1),
+                ScreenElements("🍐","pera", 1),
+                ScreenElements("💣","bomb", -15),
+                ScreenElements("🧨","tnt", -25)
+            ]
+            
+            for node in nodes(at: location){
+                for element in listOfElements {
+                    if node.name == element.name {
+                        score += element.score
+                        node.removeFromParent()
+                        
+                        if score <= 0 {
+                            gameOver()
+                            score = 0
+                        }
+                        
+                        scoreLabel.text = "\(score)"
+                    }
+            }
         }
+    }
     }
     
     
@@ -94,6 +124,14 @@ class GameScene: SKScene {
     
     
     func gameOver() {
+        promptLabel.isHidden = false
+        promptLabel.text = "Game Over"
+        promptLabel.setScale(0)
+        promptLabel.run(SKAction.scale(to: 1, duration: 0.3))
         
+        gamePhase = .gameover
+        
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: {_ in self.gamePhase = .ready})
     }
 }
+
