@@ -15,6 +15,8 @@
 		79BFACD22287046B00DDC527 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79BFACD02287046B00DDC527 /* Main.storyboard */; };
 		79BFACD42287046C00DDC527 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79BFACD32287046C00DDC527 /* Assets.xcassets */; };
 		79BFACD72287046C00DDC527 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79BFACD52287046C00DDC527 /* LaunchScreen.storyboard */; };
+		79BFACE32287164B00DDC527 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BFACE22287164B00DDC527 /* GlobalFunctions.swift */; };
+		79BFACE52287165C00DDC527 /* Fruit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BFACE42287165C00DDC527 /* Fruit.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		79BFACD32287046C00DDC527 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		79BFACD62287046C00DDC527 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		79BFACD82287046C00DDC527 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79BFACE22287164B00DDC527 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
+		79BFACE42287165C00DDC527 /* Fruit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fruit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				79BFACD32287046C00DDC527 /* Assets.xcassets */,
 				79BFACD52287046C00DDC527 /* LaunchScreen.storyboard */,
 				79BFACD82287046C00DDC527 /* Info.plist */,
+				79BFACE22287164B00DDC527 /* GlobalFunctions.swift */,
+				79BFACE42287165C00DDC527 /* Fruit.swift */,
 			);
 			path = samurai_slash;
 			sourceTree = "<group>";
@@ -146,8 +152,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79BFACE52287165C00DDC527 /* Fruit.swift in Sources */,
 				79BFACCD2287046B00DDC527 /* GameScene.swift in Sources */,
 				79BFACCF2287046B00DDC527 /* GameViewController.swift in Sources */,
+				79BFACE32287164B00DDC527 /* GlobalFunctions.swift in Sources */,
 				79BFACC72287046B00DDC527 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
