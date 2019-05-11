@@ -35,6 +35,8 @@ class GameScene: SKScene {
         bestLabel = childNode(withName: "bestLabel") as! SKLabelNode
         bestLabel.text = "Best: \(best)"
         
+        physicsWorld.gravity = CGVector(dx: 0, dy: -2)
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -53,11 +55,26 @@ class GameScene: SKScene {
     
     func startGame(){
         promptLabel.isHidden = true
+        fruitThrowTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true, block: {_ in self.createFruits()})
     }
     
     
     func createFruits() {
-
+        let fruit = Fruit()
+        fruit.position.x = randomCGFfloat(0, size.width)
+        fruit.position.y = -100
+        addChild(fruit)
+        
+        if fruit.position.x < size.width/2 {
+            fruit.physicsBody?.velocity.dx = randomCGFfloat(0, 200)
+        }
+        
+        if fruit.position.x > size.width/2 {
+            fruit.physicsBody?.velocity.dx = randomCGFfloat(0, -200)
+        }
+        
+        fruit.physicsBody?.velocity.dy = randomCGFfloat(500, 800)
+        fruit.physicsBody?.angularVelocity = randomCGFfloat(-5, 5)
     }
     
     

@@ -10,8 +10,8 @@ import SpriteKit
 
 class Fruit: SKNode {
     
-    let fruitEmojis = ["🍏","🍉","🍌","🍊","🍓", "🍇"]
-    let bombEmoji = "💣"
+    let fruitEmojis = ["🍏","🍉","🍌","🍊","🍓", "🍇", "🍍", "🍒", "🍐"]
+    let bombEmoji = ["💣", "🧨"]
     
     override init(){
         super.init()
@@ -25,7 +25,8 @@ class Fruit: SKNode {
             
         } else {
             name = "bomb"
-            emoji = bombEmoji
+            let n = Int(arc4random_uniform(UInt32(bombEmoji.count)))
+            emoji = bombEmoji[n]
         }
         
         let label = SKLabelNode(text: emoji)
