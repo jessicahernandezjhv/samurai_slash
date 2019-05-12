@@ -102,20 +102,10 @@ class GameScene: SKScene {
                     }
                 }
             }
-            
-            let path = CGMutablePath()
-            path.move(to: location)
-            path.addLine(to: previous)
-            
-            let line = SKShapeNode(path: path)
-            line.lineWidth = 10
-            line.strokeColor = .black
+        
+            let line = TrailLain(position: location, lastPosition: previous, width: 8, color: .blue)
             addChild(line)
-            
-            line.run(SKAction.sequence([
-                SKAction.fadeAlpha(to: 0, duration: 0.2),
-                SKAction.removeFromParent()
-                ]))
+
         }
     }
     
