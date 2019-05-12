@@ -19,12 +19,19 @@ class GameScene: SKScene {
     var gamePhase = GamePhase.ready
     var score = 0
     var best = 0
+    var missesMax = 3
+    var misses = 0
+    
     
     var promptLabel = SKLabelNode()
     var scoreLabel = SKLabelNode()
     var bestLabel = SKLabelNode()
     
     var fruitThrowTimer = Timer()
+    
+    var explodeOverlay = SKShapeNode()
+    
+    
     
     
     override func didMove(to view: SKView) {
@@ -37,6 +44,11 @@ class GameScene: SKScene {
         bestLabel.text = "Best: \(best)"
         
         physicsWorld.gravity = CGVector(dx: 0, dy: -2)
+        
+        explodeOverlay = SKShapeNode(rect: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        explodeOverlay.fillColor = .white
+        addChild(explodeOverlay)
+        explodeOverlay.alpha = 0
         
     }
     
@@ -69,7 +81,7 @@ class GameScene: SKScene {
                     if node.name == element.name {
                         score += element.score
                         node.removeFromParent()
-                        
+
                         if score > best {
                             best = score
                             bestLabel.text = "Best: \(best)"
@@ -78,6 +90,11 @@ class GameScene: SKScene {
                         if score <= 0 {
                             score = 0
                             gameOver()
+                        }
+                        
+                        if node.name == "bomb" || node.name == "tnt" {
+                            particleEffect(position: node.position)
+                            bombExplode()
                         }
                         
                         scoreLabel.text = "\(score)"
@@ -89,8 +106,22 @@ class GameScene: SKScene {
     
     
     func startGame(){
+        score = 0
+        misses = 0
+        
         promptLabel.isHidden = true
-        fruitThrowTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true, block: {_ in self.createFruits()})
+        fruitThrowTimer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: true, block: {_ in self.createFruits()})
+    }
+    
+    override func didSimulatePhysics() {
+        for case let fruit as Fruit in children {
+            if fruit.name != "bomb" && fruit.name != "tnt" {
+                if fruit.position.y < -100 {
+                    missFruit()
+                    fruit.removeFromParent()
+                }
+            }
+        }
     }
     
     
@@ -119,12 +150,31 @@ class GameScene: SKScene {
     
     
     func missFruit() {
+        misses += 1
+        print(misses)
         
+        if misses >= missesMax {
+            gameOver()
+        }
     }
     
     
     func bombExplode() {
         
+        for case let fruit as Fruit in children {
+            fruit.removeFromParent()
+            particleEffect(position: fruit.position)
+        }
+        
+        explodeOverlay.run(SKAction.sequence([
+            SKAction.fadeAlpha(to: 1, duration: 0),
+            SKAction.wait(forDuration: 0.2),
+            SKAction.fadeAlpha(to: 0, duration: 0),
+            SKAction.wait(forDuration: 0.2),
+            SKAction.fadeAlpha(to: 1, duration: 0),
+            SKAction.wait(forDuration: 0.2),
+            SKAction.fadeAlpha(to: 0, duration: 0)
+            ]))
     }
     
     
@@ -140,6 +190,12 @@ class GameScene: SKScene {
         fruitThrowTimer.invalidate()
         
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: {_ in self.gamePhase = .ready})
+    }
+    
+    func particleEffect(position: CGPoint) {
+        let emitter = SKEmitterNode(fileNamed: "Explode.sks")
+        emitter?.position = position
+        addChild(emitter!)
     }
 }
 

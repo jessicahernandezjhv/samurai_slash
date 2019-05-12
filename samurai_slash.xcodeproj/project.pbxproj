@@ -17,6 +17,7 @@
 		79BFACD72287046C00DDC527 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79BFACD52287046C00DDC527 /* LaunchScreen.storyboard */; };
 		79BFACE32287164B00DDC527 /* GlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BFACE22287164B00DDC527 /* GlobalFunctions.swift */; };
 		79BFACE52287165C00DDC527 /* Fruit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BFACE42287165C00DDC527 /* Fruit.swift */; };
+		79FA22C922884013002BA656 /* Explode.sks in Resources */ = {isa = PBXBuildFile; fileRef = 79FA22C822884013002BA656 /* Explode.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		79BFACD82287046C00DDC527 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79BFACE22287164B00DDC527 /* GlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalFunctions.swift; sourceTree = "<group>"; };
 		79BFACE42287165C00DDC527 /* Fruit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fruit.swift; sourceTree = "<group>"; };
+		79FA22C822884013002BA656 /* Explode.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explode.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 				79BFACD82287046C00DDC527 /* Info.plist */,
 				79BFACE22287164B00DDC527 /* GlobalFunctions.swift */,
 				79BFACE42287165C00DDC527 /* Fruit.swift */,
+				79FA22C822884013002BA656 /* Explode.sks */,
 			);
 			path = samurai_slash;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79BFACD22287046B00DDC527 /* Main.storyboard in Resources */,
+				79FA22C922884013002BA656 /* Explode.sks in Resources */,
 				79BFACC92287046B00DDC527 /* GameScene.sks in Resources */,
 				79BFACD42287046C00DDC527 /* Assets.xcassets in Resources */,
 				79BFACD72287046C00DDC527 /* LaunchScreen.storyboard in Resources */,
