@@ -62,6 +62,7 @@ class GameScene: SKScene {
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
+            let previous = touch.previousLocation(in:self)
             
             let listOfElements = [
                 ScreenElements("🍏","manzana", 10),
@@ -101,6 +102,20 @@ class GameScene: SKScene {
                     }
                 }
             }
+            
+            let path = CGMutablePath()
+            path.move(to: location)
+            path.addLine(to: previous)
+            
+            let line = SKShapeNode(path: path)
+            line.lineWidth = 10
+            line.strokeColor = .black
+            addChild(line)
+            
+            line.run(SKAction.sequence([
+                SKAction.fadeAlpha(to: 0, duration: 0.2),
+                SKAction.removeFromParent()
+                ]))
         }
     }
     
