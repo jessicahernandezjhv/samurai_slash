@@ -16,22 +16,30 @@ enum GamePhase {
 
 class GameScene: SKScene {
     
+    // Set game status before play
     var gamePhase = GamePhase.ready
     var score = 0
     var best = 0
     var missesMax = 3
     var misses = 0
+    var generateFruitInverval = 2.5
+    var velocityYLowerRandom : CGFloat = 500
+    var velocityYUpperRandom : CGFloat = 800
+    var angularVelocityLower : CGFloat = -5
+    var angularVelocityUpper : CGFloat = 5
+    var numberOfRandomFruits : CGFloat =  3.0
+
     
-    
+    // Set screen elements
     var promptLabel = SKLabelNode()
     var scoreLabel = SKLabelNode()
     var bestLabel = SKLabelNode()
-    
-    var fruitThrowTimer = Timer()
-    
     var explodeOverlay = SKShapeNode()
+    var livesLabel = SKLabelNode()
     
-    
+    // Set timer
+    var fruitThrowTimer = Timer()
+    var matchTimer = Timer()
     
     
     override func didMove(to view: SKView) {
@@ -43,7 +51,10 @@ class GameScene: SKScene {
         bestLabel = childNode(withName: "bestLabel") as! SKLabelNode
         bestLabel.text = "Best: \(best)"
         
-        physicsWorld.gravity = CGVector(dx: 0, dy: -2)
+        livesLabel = childNode(withName: "livesLabel") as! SKLabelNode
+        livesLabel.text = "Lives: \(missesMax-misses)"
+        
+        physicsWorld.gravity = CGVector(dx: 0, dy: -4)
         
         explodeOverlay = SKShapeNode(rect: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         explodeOverlay.fillColor = .white
@@ -112,11 +123,36 @@ class GameScene: SKScene {
     
     func startGame(){
         score = 0
+        best = 0
         misses = 0
+        generateFruitInverval = 2.5
+        velocityYLowerRandom = 500
+        velocityYUpperRandom = 800
+        angularVelocityLower = -5
+        angularVelocityUpper = 5
+        numberOfRandomFruits = 3.0
+        generateFruitInverval = 2.5
         
         promptLabel.isHidden = true
-        fruitThrowTimer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: true, block: {_ in self.createFruits()})
+        fruitThrowTimer = Timer.scheduledTimer(withTimeInterval: generateFruitInverval, repeats: true, block: {_ in self.createFruits()})
+        matchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: {_ in self.checkTimer()})
     }
+    
+    func checkTimer() {
+        if velocityYUpperRandom < 1100 {
+            generateFruitInverval -= 0.07
+            velocityYLowerRandom += 1
+            velocityYUpperRandom += 1
+            angularVelocityLower += 1
+            angularVelocityUpper += 1
+            numberOfRandomFruits += 0.04
+        } else {
+            generateFruitInverval -= 0.01
+            angularVelocityLower += 1
+            angularVelocityUpper += 1
+        }
+    }
+    
     
     override func didSimulatePhysics() {
         for case let fruit as Fruit in children {
@@ -131,13 +167,15 @@ class GameScene: SKScene {
     
     
     func createFruits() {
-        let numberOfFruits = 1 + Int(arc4random_uniform(UInt32(4)))
-        
+        var numberOfFruits = Int((randomCGFfloat(1, numberOfRandomFruits)).rounded())
+        print(numberOfRandomFruits)
+        print(numberOfFruits)
+        print("-----")
         for _ in 0..<numberOfFruits {
             
             let fruit = Fruit()
             fruit.position.x = randomCGFfloat(0, size.width)
-            fruit.position.y = -100
+            fruit.position.y = -60
             addChild(fruit)
             
             if fruit.position.x < size.width/2 {
@@ -148,24 +186,25 @@ class GameScene: SKScene {
                 fruit.physicsBody?.velocity.dx = randomCGFfloat(0, -200)
             }
             
-            fruit.physicsBody?.velocity.dy = randomCGFfloat(500, 800)
+            var velocityY = randomCGFfloat(velocityYLowerRandom, velocityYUpperRandom)
+            fruit.physicsBody?.velocity.dy = velocityY
             fruit.physicsBody?.angularVelocity = randomCGFfloat(-5, 5)
-        }
+            }
     }
     
     
     func missFruit() {
         misses += 1
-        print(misses)
+        livesLabel.text = "Lives: \(missesMax-misses)"
         
         if misses >= missesMax {
             gameOver()
+            livesLabel.text = "Lives: 0"
         }
     }
     
     
     func bombExplode() {
-        
         for case let fruit as Fruit in children {
             fruit.removeFromParent()
             particleEffect(position: fruit.position)
@@ -193,6 +232,7 @@ class GameScene: SKScene {
         gamePhase = .gameover
         
         fruitThrowTimer.invalidate()
+        matchTimer.invalidate()
         
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: {_ in self.gamePhase = .ready})
     }
@@ -203,4 +243,3 @@ class GameScene: SKScene {
         addChild(emitter!)
     }
 }
-
